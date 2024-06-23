@@ -6,7 +6,7 @@
 @section('content')
     <div class="col pt-4">
         <h1>Acerca de nosotros</h1>
-        <p class="lead">App para registro de propiedades</p>
+        <p class="lead">Sistema para registro de movimiento de rebaño</p>
         <hr />
         <div class="content-background p-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium necessitatibus nesciunt blanditiis, dicta minus quidem, velit pariatur quia adipisci commodi vitae reiciendis quas totam mollitia ea sint, illum ducimus accusamus. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto ducimus tempore suscipit quod accusantium tenetur eaque eos incidunt unde magni veritatis et officia, impedit recusandae reprehenderit totam vitae! Laborum, sint.

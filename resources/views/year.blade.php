@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-5 col-md-6 d-flex justify-content-start align-items-center pt-4">
+    <div class="col-12 d-flex justify-content-start align-items-center pt-4">
         <h1 class="ms-4">Movimiento de rebaño por año</h1>
     </div>
 </div>
@@ -14,9 +14,9 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th scope="col" colspan="1" rowspan="2" class="table-secondary text-center align-middle">Leyenda</th>
-            <th scope="col" colspan="4" class="table-secondary text-center">índices</th>
-            <th scope="col" rowspan="2" class="table-secondary text-center align-middle">Observaciones</th>
+            <th scope="col" colspan="1" rowspan="2" class="table-success text-center align-middle">Leyenda</th>
+            <th scope="col" colspan="4" class="table-success text-center">índices</th>
+            <th scope="col" rowspan="2" class="table-success text-center align-middle">Observaciones</th>
         </tr>
         <tr>
             <th scope="col">Animales</th>
@@ -80,9 +80,9 @@
             <th scope="col" colspan="7">Responsable:</th>
         </tr>
         <tr>
-            <th scope="col" class="table-secondary" colspan="3">Inicio de año</th>
-            <th scope="col" class="table-secondary" colspan="5">Durante el año</th>
-            <th scope="col" class="table-secondary" colspan="2">Final de año</th>
+            <th scope="col" class="table-success" colspan="3">Inicio de año</th>
+            <th scope="col" class="table-success" colspan="5">Durante el año</th>
+            <th scope="col" class="table-success" colspan="2">Final de año</th>
         </tr>
         <tr>
             <th scope="col">Tipo de animal</th>
@@ -100,6 +100,21 @@
         </tr>
     </thead>
     <tbody>
+        @foreach($events as $event)
+            <tr>
+                <td scope="row">{{ $event->tipoAnimal }}</td>
+                <td scope="row">{{ $event->cantidadAnimal }}</td>
+                <td scope="row">{{ $event->totalUA }}</td>
+                <td scope="row">{{ $event->nacimientos }}</td>
+                <td scope="row">{{ $event->muertes }}</td>
+                <td scope="row">{{ $event->descartes }}</td>
+                <td scope="row">{{ $event->venta_cria }}</td>
+                <td scope="row">{{ $event->venta_beneficio }}</td>
+                <td scope="row">7</td>
+                <td scope="row">8</td>
+                <td scope="row">9</td>
+            </tr>
+        @endforeach
         <tr>
             <td scope="row">Toros</td>
             <td scope="row">1</td>

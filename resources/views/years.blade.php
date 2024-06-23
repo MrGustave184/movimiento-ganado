@@ -5,10 +5,10 @@
 
 @section('content')
 <div class="row">
-    <div class="col-5 col-md-4">
+    <!-- <div class="col-5 col-md-4">
         <img src="{{ url('/img/logo.png') }}">
-    </div>
-    <div class="col-5 col-md-6 d-flex justify-content-start align-items-center pt-4">
+    </div> -->
+    <div class="col-12 d-flex justify-content-start align-items-center pt-4">
         <h1 class="ms-4">Movimiento de rebaño - varios años</h1>
     </div>
 </div>
@@ -17,9 +17,9 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th scope="col" colspan="1" rowspan="2" class="table-secondary text-center align-middle">Leyenda</th>
-            <th scope="col" colspan="4" class="table-secondary text-center">índices</th>
-            <th scope="col" rowspan="2" class="table-secondary text-center align-middle">Observaciones</th>
+            <th scope="col" colspan="1" rowspan="2" class="table-success text-center align-middle">Leyenda</th>
+            <th scope="col" colspan="4" class="table-success text-center">índices</th>
+            <th scope="col" rowspan="2" class="table-success text-center align-middle">Observaciones</th>
         </tr>
         <tr>
             <th scope="col">Animales</th>

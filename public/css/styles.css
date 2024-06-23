@@ -1,3 +1,6 @@
+* {
+    font-size: 26px;
+}
 /* this is needed to make the content scrollable on larger screens */
 @media (min-width: 576px) {
     .h-sm-100 {
@@ -6,7 +9,7 @@
 }
 
 .content-background {
-    background-color: #d9d9d9;
+    background-color: #e8d3e1;
     border-radius: 20px;
 }
 

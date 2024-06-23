@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\PropertyController;
 
 Route::get('/', function () {
@@ -19,13 +20,10 @@ Route::get('/movimiento-periodo', function () {
     return view('years');
 })->name('years');
 
-Route::get('/movimiento', function () {
-    return view('year');
-})->name('year');
+Route::get('/movimiento', [EventController::class, 'show'])->name('year');
 
-Route::get('/registro', function () {
-    return view('register');
-})->name('register');
+Route::get('/registro', [EventController::class, 'register'])->name('register');
+Route::post('/registro', [EventController::class, 'create'])->name('createEvent');
 
 
 Route::prefix('terreno')->group(function () {

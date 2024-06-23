@@ -8,9 +8,17 @@
         <!-- <div class="col-5 col-md-4">
             <img src="{{ url('/img/logo.png') }}">
         </div> -->
-        <div class="col-12 text-center pt-4">
-            <h1 class="ms-4">Bienvenido</h1>
-        </div>
+        @isset($message)
+            <div class="col-12 text-center pt-4">
+                <div class="alert alert-primary" role="alert">
+                    {{ $message }}
+                </div>
+            </div>
+        @else
+            <div class="col-12 text-center pt-4">
+                <h1 class="ms-4">Bienvenido</h1>
+            </div>
+        @endisset
     </div>
     <div class="col pt-4">
         <h1>Inicio</h1>
