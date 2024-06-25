@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('tipoAnimal');
             $table->decimal('unidadAnimal');
             $table->integer('evento');
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

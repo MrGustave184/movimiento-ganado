@@ -12,17 +12,21 @@ class Event extends Model
 
     public function getGrouped($cedula) 
     {
-        return DB::select('select
+        return DB::select('SELECT
             tipoAnimal,
-            nacimientos - (muertes + descartes + venta_cria + venta_beneficio) as cantidadAnimal,
-            totalUA,
+            cantidad,
+            UAinicial,
             nacimientos,
             muertes,
             descartes,
             venta_cria,
-            venta_beneficio
-        from (
-            select
+            venta_beneficio,
+            cantidad - (muertes + descartes + venta_cria + venta_beneficio) as cantidadFinal,
+            UAfinal
+        FROM (
+            SELECT
+                SUM(CASE WHEN evento = 0 OR evento = 1 THEN cantidad END) AS cantidad,
+                SUM(CASE WHEN evento = 0 THEN unidadAnimal END) AS UAinicial,
                 CASE
                     WHEN tipoAnimal = 0 THEN "Toros"
                     WHEN tipoAnimal = 1 THEN "Toretes"
@@ -34,16 +38,46 @@ class Event extends Model
                     WHEN tipoAnimal = 7 THEN "Mautes"
                     WHEN tipoAnimal = 8 THEN "Becerras"
                     WHEN tipoAnimal = 9 THEN "Becerros"
-                END as tipoAnimal,
-                SUM(unidadAnimal) as totalUA,
-                COUNT(CASE WHEN evento = 0 THEN evento END) as nacimientos,
-                COUNT(CASE WHEN evento = 1 THEN evento END) as muertes,
-                COUNT(CASE WHEN evento = 2 THEN evento END) as descartes,
-                COUNT(CASE WHEN evento = 3 THEN evento END) as venta_cria,
-                COUNT(CASE WHEN evento = 4 THEN evento END) as venta_beneficio
-            from events
-            where cedula = ?
-            group by tipoAnimal
+                END AS tipoAnimal,
+                SUM(unidadAnimal) as UAfinal,
+                COALESCE(SUM(CASE WHEN evento = 1 THEN cantidad END), 0) AS nacimientos,
+                COALESCE(SUM(CASE WHEN evento = 2 THEN cantidad END), 0) AS muertes,
+                COALESCE(SUM(CASE WHEN evento = 3 THEN cantidad END), 0) AS descartes,
+                COALESCE(SUM(CASE WHEN evento = 4 THEN cantidad END), 0) AS venta_cria,
+                COALESCE(SUM(CASE WHEN evento = 5 THEN cantidad END), 0) AS venta_beneficio
+            FROM events
+            WHERE cedula = ?
+            AND year(created_at) = year(curdate())
+            GROUP BY tipoAnimal
+        ) eventData', [$cedula]);
+    }
+
+    public function getTotals($cedula) 
+    {
+        return DB::select('SELECT
+            cantidad,
+            totalAnimales,
+            totalUAInicial,
+            totalNacimientos,
+            totalMuertes,
+            totalDescartes,
+            totalVenta_cria,
+            totalVenta_beneficio,
+            UAFinal,
+            totalAnimales + totalNacimientos - (totalMuertes + totalDescartes + totalVenta_cria + totalVenta_beneficio) as cantidadFinal
+        FROM (
+            SELECT
+                SUM(CASE WHEN evento = 0 OR evento = 1 THEN cantidad END) AS cantidad,
+                COALESCE(SUM(CASE WHEN evento = 0 THEN cantidad END), 0) AS totalAnimales,
+                COALESCE(SUM(CASE WHEN evento = 0 THEN unidadAnimal END), 0) AS totalUAInicial,
+                COALESCE(SUM(CASE WHEN evento = 1 THEN cantidad END), 0) AS totalNacimientos,
+                COALESCE(SUM(CASE WHEN evento = 2 THEN cantidad END), 0) AS totalMuertes,
+                COALESCE(SUM(CASE WHEN evento = 3 THEN cantidad END), 0) AS totalDescartes,
+                COALESCE(SUM(CASE WHEN evento = 4 THEN cantidad END), 0) AS totalVenta_cria,
+                COALESCE(SUM(CASE WHEN evento = 5 THEN cantidad END), 0) AS totalVenta_beneficio,
+                SUM(unidadAnimal) as UAfinal
+            FROM events
+            WHERE cedula = ?
         ) eventData', [$cedula]);
     }
 }

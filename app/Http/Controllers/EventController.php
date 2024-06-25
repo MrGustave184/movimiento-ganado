@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Helpers\EventsHelper;
-use App\Models\Event;
 
 class EventController extends Controller
 {
@@ -15,12 +16,19 @@ class EventController extends Controller
 
     public function create(Request $request)
     {
+        $eventsHelper = new EventsHelper;
         $eventData = $request->all();
         $event = new Event;
         $event->cedula = 1234567;
         $event->tipoAnimal = $eventData['tipo-animal'];
         $event->unidadAnimal = $eventData['unidad-animal'];
         $event->evento = $eventData['evento'];
+        $event->cantidad = $eventData['cantidad'];
+
+        if (in_array($event->evento, $eventsHelper->eventosUAnegativo)) {
+            $event->unidadAnimal *= -1; 
+        }
+        
         $event->save();
 
         return view('register', [
@@ -33,11 +41,14 @@ class EventController extends Controller
         $cedula = 1234567;
         $eventsHelper = new EventsHelper;
         $events = new Event;
-
+        $date = Carbon::now();
+        
         return view('year', [
             'events' => $events->getGrouped($cedula),
             'tiposAnimal' => $eventsHelper->tiposAnimal,
-            'tiposEvento' => $eventsHelper->tiposEvento
+            'tiposEvento' => $eventsHelper->tiposEvento,
+            'totals' => $events->getTotals($cedula)[0],
+            'year' => $date->year
         ]);
     }
 }
